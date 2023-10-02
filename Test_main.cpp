@@ -10,7 +10,7 @@ TEST_CASE("List", "[List]") {
     SECTION("PushBack - добавление элемента в список с конца") {
         INFO("элемент не добавлен");
         body1.PushBack(101);
-        REQUIRE(body1.Size() == 1);
+        REQUIRE(body1.Size() == 1);        
     }
 
     SECTION("PopFront - добавление элемента в список сначала") {
@@ -37,16 +37,22 @@ TEST_CASE("List", "[List]") {
         body1.PushFront(404);
         body1.PushFront(444);
         CHECK(body1.Size() == 2);
+        REQUIRE(body1.Size() <= 2);
 
         body1.PushBack(101);
         body1.PushBack(111);
         CHECK(body1.Size() == 4);
+        REQUIRE(body1.Size() <= 4);
 
         CHECK(body1.PopFront());
+        CHECK(body1.Size() == 3);
+        REQUIRE(body1.Size() >= 3);
 
         CHECK(body1.PopBack());
-
         CHECK(body1.Size() == 2);
+        REQUIRE(body1.Size() >= 2);
+
+        //CHECK(body1.Size() == 2);
 
 
 
@@ -58,8 +64,10 @@ TEST_CASE("List", "[List]") {
             REQUIRE(body1.Size() == 0);
         }
 
+        REQUIRE(body1.Size() == 0);
         CHECK(body1.PopFront());
-
+        
+        REQUIRE(body1.Size() == 0);
         CHECK(body1.PopBack());
 
     }
