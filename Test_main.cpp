@@ -3,9 +3,12 @@
 #include "CMakeProject3.h"
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/catch_session.hpp>
+#include <catch2/matchers/catch_matchers.hpp>
 
 TEST_CASE("List", "[List]") {
     List body1;
+
+    //REQUIRE_FALSE(body1.Empty()!=1);
 
     SECTION("PushBack - добавление элемента в список с конца") {
         INFO("элемент не добавлен");
@@ -20,13 +23,16 @@ TEST_CASE("List", "[List]") {
     }
 
     SECTION("PushFront - удаление элемента пустого списока сначала") {
-        INFO("Вызвано исключение");
-        REQUIRE(body1.PopFront());
+        INFO("Исключение не вызвано!");
+       // body1.PushBack(101);
+        CHECK_THROWS_AS(body1.PopFront(), std::runtime_error);
+        
     }
 
     SECTION("PopBack - удаление элемента пустого списока с конца") {
-        INFO("Вызвано исключение");
-        REQUIRE(body1.PopBack());
+        INFO("Исключение не вызвано!");
+        //body1.PushBack(101);
+        CHECK_THROWS_AS(body1.PopBack(), std::runtime_error);       
     }
 
     SECTION("Комплексная проверка: добавление 2 элементов сначала списка, 2 элементов с конца списка, удаление 1 элемента сначала списка, удаление 1 элемента с конца списка, очистка списка,удаление элемента пустого списока сначала,удаление элемента пустого списока с конца")
@@ -54,22 +60,20 @@ TEST_CASE("List", "[List]") {
 
         //CHECK(body1.Size() == 2);
 
-
-
-
         SECTION("Очистка списка") {
             INFO("список не пустой");
             body1.Clear();
             REQUIRE(body1.Empty() == 1);
             REQUIRE(body1.Size() == 0);
         }
-
-        REQUIRE(body1.Size() == 0);
-        CHECK(body1.PopFront());
         
-        REQUIRE(body1.Size() == 0);
-        CHECK(body1.PopBack());
-
+       // body1.PushBack(111);       
+        CHECK_THROWS_WITH(body1.PopFront(), "list is empty");
+        
+       // body1.PushBack(111);
+       // CHECK_NOTHROW(body1.PopBack());       
+        CHECK_THROWS(body1.PopBack());
+        
     }
 }
 
